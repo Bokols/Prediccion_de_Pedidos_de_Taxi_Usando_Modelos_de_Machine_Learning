@@ -60,4 +60,30 @@ Se probó el **XGBoost Regressor** con:
 - `n_estimators`: [None, 30, 50, 100]  
 - `max_depth`: [None, 5, 10, 20]  
 
-La mejor combinac
+La mejor combinación (**`n_estimators=30, max_depth=5`**) resultó en:  
+- **RMSE en entrenamiento**: No especificado  
+- **RMSE en prueba**: **47.0**  
+
+## **Comparación del Rendimiento de los Modelos**  
+
+| Modelo                     | RMSE (Prueba) |
+|---------------------------|--------------|
+| **CatBoost Regressor**    | **44.7**     |
+| LightGBM Regressor       | 46.2         |
+| Random Forest Regressor  | 46.3         |
+| XGBoost Regressor        | 47.0         |
+| Regresión Lineal         | 53.2         |
+
+- **Mejor Modelo:** **CatBoost Regressor** (RMSE: 44.7)  
+- **Peor Modelo:** **Regresión Lineal** (RMSE: 53.2)  
+
+## **Conclusión**  
+
+Después del entrenamiento y la evaluación de los modelos, se identificó que el **CatBoost Regressor** tuvo el mejor rendimiento con un **RMSE de 44.7**, significativamente por debajo del umbral de **48 RMSE**.  
+
+Al implementar este modelo, **Sweet Lift Taxi** podrá:  
+- Predecir la demanda de taxis por hora con mayor precisión.  
+- Optimizar la distribución de conductores para reducir los tiempos de espera.  
+- Mejorar la satisfacción del cliente y aumentar la rentabilidad.  
+
+En conclusión, este proyecto logró desarrollar una solución de machine learning eficaz para la predicción de la demanda de taxis, proporcionando información valiosa para que **Sweet Lift Taxi** optimice su eficiencia operativa.  
