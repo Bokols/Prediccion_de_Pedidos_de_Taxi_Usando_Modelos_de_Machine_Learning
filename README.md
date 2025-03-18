@@ -1,12 +1,63 @@
-# Sweet-Lift-Taxi
+# **Predicción de Pedidos de Taxi Usando Modelos de Machine Learning**  
 
-Descripción del proyecto¶
-La compañía Sweet Lift Taxi ha recopilado datos históricos sobre pedidos de taxis en los aeropuertos. Para atraer a más conductores durante las horas pico, necesitamos predecir la cantidad de pedidos de taxis para la próxima hora. Construye un modelo para dicha predicción.
+## **Introducción**  
+En este proyecto, el objetivo fue desarrollar un modelo de machine learning para predecir el número de pedidos de taxi por hora para la empresa **Sweet Lift Taxi**. Al predecir la demanda con precisión, la empresa puede optimizar la distribución de sus conductores, reducir los tiempos de espera de los pasajeros y aumentar la eficiencia operativa. Para lograr esto, se entrenaron y evaluaron varios modelos de regresión en función de su **Error Cuadrático Medio (RMSE)**, con un umbral de rendimiento establecido en **48 RMSE**.  
 
-La métrica RECM en el conjunto de prueba no debe ser superior a 48.
+## **Preparación y Preprocesamiento de Datos**  
 
-1  Instrucciones del proyecto.
-Descarga los datos y haz el remuestreo por una hora.
-Analiza los datos
-Entrena diferentes modelos con diferentes hiperparámetros. La muestra de prueba debe ser el 10% del conjunto de datos inicial.
-Prueba los datos usando la muestra de prueba y proporciona una conclusión.
+### **Selección de Características y Variable Objetivo**  
+El conjunto de datos contenía múltiples características relacionadas con los pedidos de taxi. Se realizó la división de la siguiente manera:  
+
+- **Variable objetivo (`X`)**: El número de pedidos de taxi (`num_orders`).  
+- **Características (`y`)**: Todas las demás variables excepto `num_orders`.  
+
+### **División en Conjuntos de Entrenamiento y Prueba**  
+Se dividió el conjunto de datos en **entrenamiento y prueba** usando **`train_test_split`**, reservando el **10% de los datos para pruebas** y asegurando que no hubiera mezcla de datos (`shuffle=False`). Posteriormente, se reestructuraron los datos para garantizar compatibilidad con los modelos.  
+
+## **Entrenamiento y Evaluación de Modelos**  
+
+Se entrenaron varios modelos de regresión y se realizó el ajuste de hiperparámetros utilizando **GridSearchCV** para encontrar la mejor configuración. A continuación, se detallan los modelos probados, sus configuraciones y resultados.  
+
+### **Regresión Lineal**  
+El modelo de **Regresión Lineal** sirvió como base inicial. Los resultados fueron:  
+- **RMSE en entrenamiento**: No especificado  
+- **RMSE en prueba**: **53.2** (superior al umbral de 48)  
+
+Dado que el modelo no cumplió con el umbral requerido, se exploraron alternativas.  
+
+### **Random Forest Regressor**  
+Se entrenó un **Random Forest Regressor** con los siguientes valores:  
+- `n_estimators`: [50, 100, 200, 300, 500]  
+- `max_depth`: [10, 20, 50, 100]  
+
+Los mejores parámetros seleccionados fueron **`n_estimators=200, max_depth=10`**, obteniendo:  
+- **RMSE en entrenamiento**: No especificado  
+- **RMSE en prueba**: **46.3**  
+
+Este modelo cumplió con el umbral de rendimiento, por lo que fue considerado viable.  
+
+### **LightGBM Regressor**  
+Se entrenó el **LightGBM Regressor** con:  
+- `n_estimators`: [50, 100, 200, 300, 500]  
+- `max_depth`: [10, 20, 50, 100]  
+- `num_leaves`: [10, 20, 50, 100]  
+
+La mejor configuración (**`n_estimators=200, max_depth=10, num_leaves=50`**) arrojó:  
+- **RMSE en entrenamiento**: No especificado  
+- **RMSE en prueba**: **46.2**  
+
+### **CatBoost Regressor**  
+Para **CatBoost**, se probaron los siguientes hiperparámetros:  
+- `iterations`: [100, 200, 500]  
+- `depth`: [5, 10, 15]  
+
+La mejor configuración fue **`iterations=500, depth=5`**, logrando los mejores resultados entre todos los modelos:  
+- **RMSE en entrenamiento**: No especificado  
+- **RMSE en prueba**: **44.7**  
+
+### **XGBoost Regressor**  
+Se probó el **XGBoost Regressor** con:  
+- `n_estimators`: [None, 30, 50, 100]  
+- `max_depth`: [None, 5, 10, 20]  
+
+La mejor combinac
